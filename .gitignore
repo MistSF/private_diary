@@ -1,0 +1,4 @@
+backend/__pycache__/
+backend/router/__pycache__/
+function/__pycache__/
+backend/databaseconfig.py
