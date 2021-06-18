@@ -33,7 +33,11 @@ async def newText(id_client, text) :
 
 @clientRouter.put("/updateText/{id}")
 async def updateText(id_client, id, text):
-    request = "UPDATE texte SET Content = '{}' WHERE ID = '{}' AND ID_client = \"{}\"".format(text, id, id_client)
+    request = "UPDATE texte SET Content = '{}', Last_Update = {} WHERE ID = '{}' AND ID_client = \"{}\"".format(
+        text, 
+        datetime.now(), 
+        id, 
+        id_client)
     makeRequest(request)
     mydb.commit()
     return  True
