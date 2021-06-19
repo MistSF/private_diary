@@ -4,3 +4,6 @@ function/__pycache__/
 backend/databaseconfig.py
 data/
 test.ipynb
+.vscode/
+Pipfile
+Pipfile.lock
