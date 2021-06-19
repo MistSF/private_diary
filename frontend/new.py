@@ -9,7 +9,7 @@ def app() :
 
     client = nav.getCurrentClient()
 
-    st.write("Edit {} {}".format(client[1], client[2]))
+    st.write("New User".format(client[1], client[2]))
 
     forms = st.form(key="update")
     firstname = forms.text_input(label='new firstname')

@@ -9,13 +9,13 @@ clientRouter = APIRouter()
 
 @clientRouter.get("/alltext")
 async def getAllText(id_client) :
-    request = "SELECT * FROM texte WHERE ID_client = {}".format(id_client)
-    return makeRequest(request)
+    request = "SELECT * FROM texte WHERE ID_client = '{}'".format(id_client)
+    return makeRequest(request).fetchall()
 
 @clientRouter.get("/text/{id}")
 async def getText(id_client, id) :
-    request = "SELECT * FROM texte WHERE ID = {} AND ID_client = {}".format(id, id_client)
-    return makeRequest(request)
+    request = "SELECT * FROM texte WHERE ID = '{}' AND ID_client = '{}'".format(id, id_client)
+    return makeRequest(request).fetchall()
 
 @clientRouter.post("/newText")
 async def newText(id_client, text) :
@@ -33,7 +33,7 @@ async def newText(id_client, text) :
 
 @clientRouter.put("/updateText/{id}")
 async def updateText(id_client, id, text):
-    request = "UPDATE texte SET Content = '{}', Last_Update = {} WHERE ID = '{}' AND ID_client = \"{}\"".format(
+    request = "UPDATE texte SET Content = '{}', Last_Update = '{}' WHERE ID = '{}' AND ID_client = \"{}\"".format(
         text, 
         datetime.now(), 
         id, 
