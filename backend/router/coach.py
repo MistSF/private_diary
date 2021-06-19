@@ -1,5 +1,4 @@
 from fastapi import APIRouter
-from starlette.requests import Request
 from function.db import mydb, makeRequest
 
 coachRouter = APIRouter()
@@ -20,7 +19,7 @@ async def getList() :
     Get list of clients
     """
     request = "SELECT * FROM client;"
-    return makeRequest(request)
+    return makeRequest(request).fetchall()
 
 @coachRouter.delete("/delClient")
 async def delClient(ID) :
@@ -33,17 +32,9 @@ async def delClient(ID) :
     return True
 
 @coachRouter.put("/update")
-async def updateClient(ID, firstname=None, lastname=None) :
-    request = "UPDATE client SET "
-    if firstname != None :
-        request += "FirstName = '{}'".format(firstname)
-        if lastname != None :
-            request += ", "
-    elif lastname != None :
-        request += "LastName = '{}'".format(lastname)
-    else :
-        return False
-    request += "WHERE ID = {}".format(ID)
+async def updateClient(ID, firstname, lastname) :
+    print(ID, firstname, lastname)
+    request = "UPDATE client SET FirstName = '{}', LastName = '{}'  WHERE ID = '{}'".format(firstname, lastname, ID)
     makeRequest(request)
     mydb.commit()
     return True
@@ -51,4 +42,4 @@ async def updateClient(ID, firstname=None, lastname=None) :
 @coachRouter.get("/getCliennt/{id}")
 async def getClient(id) :
     request = "SELECT * FROM client WHERE ID = '{}'".format(id)
-    return makeRequest(request)
+    return makeRequest(request).fetchall()

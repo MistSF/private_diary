@@ -1,5 +1,6 @@
 import builtins
 from os import curdir
+from weakref import ProxyTypes
 import mysql.connector
 import databaseconfig as cfg
 
@@ -19,7 +20,7 @@ except mysql.connector.Error as err :
 def makeRequest(request) :
     try :
         cursor.execute(request)
-        return cursor.fetchall()
+        return cursor
     except mysql.connector.Error as err :
         print("{}".format(err))
         return False

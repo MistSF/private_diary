@@ -1,5 +1,6 @@
 import streamlit as st
 import awesome_streamlit as ast
+import requests
 
 from functions.nav import nav
 import coach
@@ -7,19 +8,25 @@ import user
 
 currentUser = ""
 
-PAGES = {
-    "Coach": coach,
-    "User": user,
-}
-
 def main() :
     """Main function of the App"""
     st.sidebar.title("Navigation")
-    selection = st.sidebar.radio("Go to", list(PAGES.keys()))
-    if selection :
-        nav.setCurrentUser(selection)
-        page = PAGES[selection]
-        nav.goTo(PAGES[selection])
-        page.app()
+    goCoach = st.sidebar.button("Coach")
+    goUser = st.sidebar.button("User")
+    if goCoach :
+        nav.setCurrentUser("Coach")
+        nav.goTo(coach)
+
+    if goUser :
+        nav.setCurrentUser("User")
+        nav.goTo(user)
+    
+    if nav.getCurrentUser() == "User" :
+        r = requests.get("{}/coach/clients".format(nav.url))
+        value = st.sidebar.selectbox("Select Dynamic", options=list(r.json()))
+        nav.setCurrentClient(value)
+
+    if nav.getPage() :
+        nav.getPage().app()
 
 main()
