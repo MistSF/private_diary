@@ -2,6 +2,9 @@ backend/__pycache__/
 backend/router/__pycache__/
 backend/function/__pycache__/
 backend/databaseconfig.py
+backend/notebook/
+backend/function/emotion-prediction-from-text-898c38(1).ipynb
+backend/weights.h5
 data/
 test.ipynb
 .vscode/

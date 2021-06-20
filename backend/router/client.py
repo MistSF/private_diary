@@ -3,6 +3,7 @@ from fastapi import APIRouter
 from starlette.requests import Request
 from starlette.routing import request_response
 from function.db import mydb, makeRequest
+from function.deepModel import predict_emotion
 from datetime import datetime
 
 clientRouter = APIRouter()
@@ -19,12 +20,13 @@ async def getText(id_client, id) :
 
 @clientRouter.post("/newText")
 async def newText(id_client, text) :
+    sentiment = predict_emotion(text)
     now = datetime.now()
     request = "INSERT INTO texte (Content, Post_Date, Last_Update, Sentiment, ID_Client) VALUES (\"{}\", '{}', '{}', '{}', '{}')".format(
         text,
         now,
         now,
-        "",
+        sentiment,
         id_client
     )
     makeRequest(request)
