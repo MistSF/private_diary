@@ -1,7 +1,9 @@
+import matplotlib.pyplot as plt
 import streamlit  as st
 import requests
-from streamlit import proto
+import pandas as pd
 from functions.nav import nav
+import plotly.express as px
 
 import edit
 import new
@@ -31,9 +33,18 @@ def app() :
     
     rtext = requests.get("{}/client/alltext?id_client={}".format(nav.getUrl(), value[0]))
 
+    Emotion = []
+
     st.title("Texte")
     for x in rtext.json() :
+        Emotion.append(x[3])
         cols = st.beta_columns(3)
         cols[0].write(x[1])
         cols[1].write(x[3])
         cols[2].write(x[2])
+
+    Emotion = pd.DataFrame(Emotion)
+    data = Emotion.value_counts()
+    data.plot.pie()
+    st.set_option('deprecation.showPyplotGlobalUse', False)
+    st.pyplot()
